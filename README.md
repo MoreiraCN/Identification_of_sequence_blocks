@@ -54,13 +54,31 @@ Pipeline developed by [ivanrwolf](https://github.com/ivanrwolf/CovDetect/blob/ma
 
 The file *blocks_larger_than_200bp.txt* contain a list of scaffolds with sequence blocks larger than 200bp. In order to vizualize the sequence blocks, the following steps were performed:
 
-### Step 10 > Obtaining of *.bg* files:
+### Step 10 > Obtaining the bed graph file:
 
 - /[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam [alignment.sorted.bam](https://github.com/MoreiraCN/Genomic_alignment) -g [assembly.fa](https://github.com/MoreiraCN/Assembling_Illumina_sequences) -bg > sample_name.bg
 
-### Step 11 > extrair os sccafolds de interesse o arquivo .bg:
+### Step 11 > Extract interesting scaffolds from bed graph file:
+
+grep 'scaffold_number' sample_name.bg > samplename_scaffoldnumber.bg
 
 ### Step 10 > View the graphs with the Sushi library of Rstudio:
 
 - Command line used:
+
+#call sushi
+library(Sushi)
+
+####open_sequence_blocks
+referencesample_scaffoldnumber = read.table(file="/referencesample_scaffoldnumber.bg")
+targetsample_scaffoldnumber = read.table(file="/targetsample_scaffoldnumber.bg")
+#plot_interesting_region
+chrom = "scaffoldnumber"
+chromstart = number_of_base_pair_to_start
+chromend = number_of_base_pair_to_end
+#plot_graph
+plotBedgraph(targetsample_scaffoldnumber,chrom,chromstart,chromend,transparency=.70,color=SushiColors(2)(2)[2])
+plotBedgraph(referencesample_scaffoldnumber,chrom,chromstart,chromend,transparency=.70,color=SushiColors(2)(2)[1],overlay=TRUE,rescaleoverlay=FALSE)
+labelgenome(chrom,chromstart,chromend,n=5,scale="Mb")
+mtext("Read Depth",side=5,line=4,cex=1,font=5)> axis(side=2,las=1,tcl=.2)
 
