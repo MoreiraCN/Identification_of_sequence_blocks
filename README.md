@@ -10,43 +10,69 @@ The following pipeline was used to identify B and sex chromosomes sequences on t
 
 [Sushi: An R/Bioconductor package for visualizing genomic data](https://www.bioconductor.org/packages/release/bioc/vignettes/Sushi/inst/doc/Sushi.pdf).
 
-Pipeline developed by [ivanrwolf](https://github.com/ivanrwolf/CovDetect/blob/master/LICENSE). Valente GT, Conte MA, Fantinatti BEA, Cabral-de-Mello DC, Carvalho RF, Vicari MR, Kocher TD, Martins C (2014) Origin and evolution of B chromosomes in the cichlid fish *Astatotilapia latifasciata* based on integrated genomic analyses. Mol Biol Evol, 31(8):2061-2072.
+Pipeline developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/master/LICENSE). Valente GT, Conte MA, Fantinatti BEA, Cabral-de-Mello DC, Carvalho RF, Vicari MR, Kocher TD, Martins C (2014) Origin and evolution of B chromosomes in the cichlid fish *Astatotilapia latifasciata* based on integrated genomic analyses. Mol Biol Evol, 31(8):2061-2072.
 
-**Input data:**
+**Step 1 > Alignment (filtered libraries 0B, 1B, and probes against assembled genome 0B):**
 
-- The *.sorted.bam* file resultant of the [align of filtered libraries against the assembled genome](https://github.com/MoreiraCN/Genomic_alignment).
+[Align the filtered libraries against the assembled genome](https://github.com/MoreiraCN/Genomic_alignment).
 
-### Step 1 > Alignment:
+**Step 2 > Coverage calculation per base:**
 
-- [Align the filtered libraries against the assembled genome](https://github.com/MoreiraCN/Genomic_alignment).
+/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_0B.sorted.bam -d > per_base_coverage_0B_0B.bed
 
-### Step 2 > Coverage calculation per base:
+/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_1B.sorted.bam -d > per_base_coverage_0B_1B.bed
 
-- /[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment.sorted.bam -d > per_base_coverage.bed
+/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_probe.sorted.bam -d > per_base_coverage_0B_probe.bed
 
-### Step 3 > Merge *.bed* files into a single file:
+**Step 3 > Merge two *.bed* files, row by row, into a single file:**
 
-- awk 'NR==FNR{a[$1,$2]=$3;next} ($1,$2) in a{print $0, a[$1,$2]}' per_base_coverage1.bed per_base_coverage2.bed > merged_bed.txt
+awk 'NR==FNR{a[$1,$2]=$3;next} ($1,$2) in a{print $0, a[$1,$2]}' per_base_coverage_0B_1B.bed per_base_coverage_0B_0B.bed > merged_1B_0B.txt
 
-### Step 4 > Discard genomic sites with less than 15X coverage:
+awk 'NR==FNR{a[$1,$2]=$3;next} ($1,$2) in a{print $0, a[$1,$2]}' per_base_coverage_0B_probe.bed per_base_coverage_0B_0B.bed > merged_probe_0B.txt
 
-- awk '$3 > 15 && $4 > 15' merged_bed.txt > merged_bed_greater15x.txt
+**Step 4 > Discard genomic sites with less than 15x coverage ($3 and $4 are the columns which represent the per base coverage of 0B and 1B or  0B and probe, respectively):**
 
-### Step 5 > Calculate the sequence blocks coverage ratio:
+awk '$3 > 15 && $4 > 15' merged_1B_0B.txt > merged_1B_0B_greater15x.txt
 
-- awk -v OFS='\t' '{$5 = sprintf("%.3f", $4 / $3)}1' merged_bed_greater15x.txt > merged_bed_ratio.txt
+awk '$3 > 15 && $4 > 15' merged_probe_0B.txt > merged_probe_0B_greater15x.txt
 
-### Step 6 > Extract genomic regions with sequence blocks having at least 2x greater coverage:
+**Step 5 > Calculate 1B/0B and probe/0B ratio:**
 
-- awk '$5 > 2' merged_bed_ratio.txt > merged_bed_ratio2xcoverage.txt
+'awk -v OFS='\t' '{$5 = sprintf("%.3f", $4 / $3)}1' merged_1B_0B_greater15x.txt > merged_1B_0B_greater15x_ratio.txt'
+
+awk -v OFS='\t' '{$5 = sprintf("%.3f", $4 / $3)}1' merged_probe_0B_greater15x.txt > merged_probe_0B_greater15x_ratio.txt
+
+
+
+
+
+
+
+**Step 6 > Extract genomic regions with sequence blocks having at least 2x greater coverage:**
+Calculate the 2B/0B ratio and extract the genomic regions with 2B genome having atleast 2x times greater coverage than 0B this means the extra copies present on the B chromosome.
+
+awk '$5 > 2' merged_bed_ratio.txt > merged_bed_ratio2xcoverage.txt
+
+awk '$5 > 2' merged_bed_ratio.txt > merged_bed_ratio2xcoverage.txt
+
+
+
 
 ### Step 7 > Format the output file for identification of sequence blocks:
 
 - awk -v OFS='\t' '{print $1, $2, $3, $4}' merged_bed_ratio2xcoverage.txt > merged_bed_inputfile.txt
 
+
+
+
+
 ### Step 8 > Identification of sequence blocks:
 
 - python2.7 [CovDetect.py](https://github.com/ivanrwolf/CovDetect/blob/master/CovDetect.py) -bp 100 -stdv 2 merged_bed_inputfile.txt
+
+
+
+
 
 ### Step 9 > Select sequence blocks larger than 200bp:
 
@@ -54,13 +80,21 @@ Pipeline developed by [ivanrwolf](https://github.com/ivanrwolf/CovDetect/blob/ma
 
 The file *blocks_larger_than_200bp.txt* contain a list of scaffolds with sequence blocks larger than 200bp. In order to vizualize the sequence blocks, the following steps were performed:
 
+
+
+
 ### Step 10 > Obtaining the bed graph file:
 
 - /[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam [alignment.sorted.bam](https://github.com/MoreiraCN/Genomic_alignment) -g [assembly.fa](https://github.com/MoreiraCN/Assembling_Illumina_sequences) -bg > sample_name.bg
 
+
+
+
 ### Step 11 > Extract interesting scaffolds from bed graph file:
 
 grep 'scaffold_number' sample_name.bg > samplename_scaffoldnumber.bg
+
+
 
 ### Step 10 > View the graphs with the Sushi library of Rstudio:
 
