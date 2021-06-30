@@ -84,6 +84,6 @@ Note: The files 'merged_1B_0B_blocks_larger_than_200bp.txt' and 'merged_probe_0B
 
 `grep 'scaffold_number' probe_0B.bg > probe_0B_scaffoldnumber.bg`
 
-### Step 12 > View the graphs with the Sushi library of the Rstudio:
+**Step 12 > View the graphs with the Sushi library of the Rstudio:**
 
 See script for [SushiGraph](https://github.com/MoreiraCN/Identification_of_sequence_blocks/blob/main/SushiGraph_rstudio.R).
