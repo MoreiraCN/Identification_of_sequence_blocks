@@ -10,7 +10,7 @@ The following pipeline was used to identify B and sex chromosomes sequences on t
 
 [Sushi: An R/Bioconductor package for visualizing genomic data](https://www.bioconductor.org/packages/release/bioc/vignettes/Sushi/inst/doc/Sushi.pdf).
 
-Pipeline developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/master/LICENSE). Valente GT, Conte MA, Fantinatti BEA, Cabral-de-Mello DC, Carvalho RF, Vicari MR, Kocher TD, Martins C (2014) Origin and evolution of B chromosomes in the cichlid fish *Astatotilapia latifasciata* based on integrated genomic analyses. Mol Biol Evol, 31(8):2061-2072.
+The pipeline [CovDetect.py](https://github.com/ivanrwolf/CovDetect/blob/master/CovDetect.py) was developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/master/LICENSE). Valente GT, Conte MA, Fantinatti BEA, Cabral-de-Mello DC, Carvalho RF, Vicari MR, Kocher TD, Martins C (2014) Origin and evolution of B chromosomes in the cichlid fish *Astatotilapia latifasciata* based on integrated genomic analyses. Mol Biol Evol, 31(8):2061-2072.
 
 **Step 1 > Alignment (filtered libraries 0B, 1B, and probes against assembled genome 0B):**
 
@@ -18,11 +18,11 @@ Pipeline developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/
 
 **Step 2 > Coverage calculation per base:**
 
-`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_0B.sorted.bam -d > per_base_coverage_0B_0B.bed`
+`/bedtools-v2.29.2 genomecov -ibam alignment_0B_0B.sorted.bam -d > per_base_coverage_0B_0B.bed`
 
-`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_1B.sorted.bam -d > per_base_coverage_0B_1B.bed`
+`/bedtools-v2.29.2 genomecov -ibam alignment_0B_1B.sorted.bam -d > per_base_coverage_0B_1B.bed`
 
-`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_probe.sorted.bam -d > per_base_coverage_0B_probe.bed`
+`/bedtools-v2.29.2 genomecov -ibam alignment_0B_probe.sorted.bam -d > per_base_coverage_0B_probe.bed`
 
 **Step 3 > Merge two '.bed' files, row by row, into a single file:**
 
@@ -56,9 +56,9 @@ Pipeline developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/
 
 **Step 8 > Identification of sequence blocks:**
 
-`[python2.7](https://www.python.org/download/releases/2.7/) [CovDetect.py](https://github.com/ivanrwolf/CovDetect/blob/master/CovDetect.py) -bp 100 -stdv 2 merged_1B_0B_inputfile.txt`
+`python2.7 CovDetect.py -bp 100 -stdv 2 merged_1B_0B_inputfile.txt`
 
-`[python2.7](https://www.python.org/download/releases/2.7/) [CovDetect.py](https://github.com/ivanrwolf/CovDetect/blob/master/CovDetect.py) -bp 100 -stdv 2 merged_probe_0B_inputfile.txt`
+`python2.7 CovDetect.py -bp 100 -stdv 2 merged_probe_0B_inputfile.txt`
 
 **Step 9 > Discard sequence blocks with less than 200 bp:**
 
@@ -70,11 +70,11 @@ Pipeline developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/
 
 **Step 10 > Obtaining the BedGraph files:**
 
-`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam [alignment_0B_0B.sorted.bam](https://github.com/MoreiraCN/Genomic_alignment) -g [assembly_0B.fa](https://github.com/MoreiraCN/Assembling_Illumina_sequences) -bg > 0B_0B.bg`
+`/bedtools-v2.29.2 genomecov -ibam alignment_0B_0B.sorted.bam -g assembly_0B.fa -bg > 0B_0B.bg`
 
-`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam [alignment_0B_1B.sorted.bam](https://github.com/MoreiraCN/Genomic_alignment) -g [assembly_0B.fa](https://github.com/MoreiraCN/Assembling_Illumina_sequences) -bg > 1B_0B.bg`
+`/bedtools-v2.29.2 genomecov -ibam alignment_0B_1B.sorted.bam -g assembly_0B.fa -bg > 1B_0B.bg`
 
-`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam [alignment_0B_probe.sorted.bam](https://github.com/MoreiraCN/Genomic_alignment) -g [assembly_0B.fa](https://github.com/MoreiraCN/Assembling_Illumina_sequences) -bg > probe_0B.bg`
+`/bedtools-v2.29.2 genomecov -ibam alignment_0B_probe.sorted.bam -g assembly_0B.fa -bg > probe_0B.bg`
 
 **Step 11 > Extract interesting scaffolds from BedGraph files:**
 
