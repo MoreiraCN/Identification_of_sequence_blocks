@@ -88,6 +88,8 @@ grep 'scaffold_number' probe_0B.bg > probe_0B_scaffoldnumber.bg
 
 ### Step 10 > View the graphs with the Sushi library of the Rstudio:
 
+- 1B_0B
+
 #call_sushi
 
 library(Sushi)
@@ -116,6 +118,7 @@ labelgenome(chrom,chromstart,chromend,n=5,scale="Mb")
 
 mtext("Read Depth",side=5,line=4,cex=1,font=5)> axis(side=2,las=1,tcl=.2)
 
+- probe_0B
 
 #call_sushi
 
