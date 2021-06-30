@@ -18,11 +18,11 @@ Pipeline developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/
 
 **Step 2 > Coverage calculation per base:**
 
-/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_0B.sorted.bam -d > per_base_coverage_0B_0B.bed
+`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_0B.sorted.bam -d > per_base_coverage_0B_0B.bed`
 
-/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_1B.sorted.bam -d > per_base_coverage_0B_1B.bed
+`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_1B.sorted.bam -d > per_base_coverage_0B_1B.bed`
 
-/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_probe.sorted.bam -d > per_base_coverage_0B_probe.bed
+`/[bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/) genomecov -ibam alignment_0B_probe.sorted.bam -d > per_base_coverage_0B_probe.bed`
 
 **Step 3 > Merge two '.bed' files, row by row, into a single file:**
 
