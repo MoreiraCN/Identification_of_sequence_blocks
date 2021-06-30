@@ -66,7 +66,7 @@ awk '$4 > 200' merged_1B_0B_inputfile_STDV2_BP100.blocks.txt > merged_1B_0B_bloc
 
 awk '$4 > 200' merged_probe_0B_inputfile_STDV2_BP100.blocks.txt > merged_probe_0B_blocks_larger_than_200bp.txt
 
-**Note: The files 'merged_1B_0B_blocks_larger_than_200bp.txt' and 'merged_probe_0B_blocks_larger_than_200bp.txt' contain a list of scaffolds with sequence blocks larger than 200 bp. In order to vizualize these sequence blocks, the following steps were performed:**
+**Note: The files 'merged_1B_0B_blocks_larger_than_200bp.txt' and 'merged_probe_0B_blocks_larger_than_200bp.txt' contain a list of scaffolds with sequence blocks larger than 200 bp. In order to visualize these sequence blocks, the following steps were performed:**
 
 **Step 10 > Obtaining the BedGraph files:**
 
