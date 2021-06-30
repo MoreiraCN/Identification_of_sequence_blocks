@@ -14,7 +14,7 @@ The pipeline [CovDetect.py](https://github.com/ivanrwolf/CovDetect/blob/master/C
 
 **Step 1 > Alignment (filtered libraries 0B, 1B, and probes against assembled genome 0B):**
 
-[Align the filtered libraries against the assembled genome](https://github.com/MoreiraCN/Genomic_alignment).
+[See script for alignment](https://github.com/MoreiraCN/Genomic_alignment).
 
 **Step 2 > Coverage calculation per base:**
 
