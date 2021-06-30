@@ -86,7 +86,7 @@ grep 'scaffold_number' probe_0B.bg > probe_0B_scaffoldnumber.bg
 
 
 
-### Step 10 > View the graphs with the Sushi library of the Rstudio:
+### Step 12 > View the graphs with the Sushi library of the Rstudio:
 
 - 1B_0B
 
