@@ -8,7 +8,7 @@ The following pipeline was used to identify B and sex chromosomes sequences on t
 
 [bedtools-v2.29.2](https://bedtools.readthedocs.io/en/latest/).
 
-[Sushi: An R/Bioconductor package for visualizing genomic data](https://www.bioconductor.org/packages/release/bioc/vignettes/Sushi/inst/doc/Sushi.pdf).
+[Sushi: An R/Bioconductor package for visualizing genomic data](https://bioconductor.riken.jp/packages/3.4/bioc/vignettes/Sushi/inst/doc/Sushi.pdf).
 
 The pipeline [CovDetect.py](https://github.com/ivanrwolf/CovDetect/blob/master/CovDetect.py) was developed by [Ivan R Wolf](https://github.com/ivanrwolf/CovDetect/blob/master/LICENSE). [Valente GT, Conte MA, Fantinatti BEA, Cabral-de-Mello DC, Carvalho RF, Vicari MR, Kocher TD, Martins C (2014) Origin and evolution of B chromosomes in the cichlid fish *Astatotilapia latifasciata* based on integrated genomic analyses. Mol Biol Evol, 31(8):2061-2072](https://pubmed.ncbi.nlm.nih.gov/24770715/).
 
